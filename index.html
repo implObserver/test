@@ -11,7 +11,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
-        <script src="js/script.js"></script>
+        <link rel="stylesheet" href="assets/datepicker/css/datepicker.min.css">
+        <link rel="stylesheet" href="assets/datepicker/css/datepicker.css">
+        <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="assets/datepicker/js/datepicker.min.js"></script>
+        <script src="assets/datepicker/js/i18n/datepicker.js"></script>
     </head>
     <body>
         <footer id="about" class="about">
@@ -20,13 +25,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <p class="text2">Депозитный калькулятор</p>
                     <p class="text3">Калькулятор депозитов позволяет рассчитать 
                         ваши доходы после внесения суммы на счет в банке 
-                        по опредленному тарифу.</p>
-                    <input type="text" class="form" id="openingDate" name="openingDate" placeHolder="Дата открытия">
+                        по опредленному тарифу.</p>                
+                    <input type="text" class="form datepicker-here" id="openingDate" name="openingDate" placeHolder="Дата открытия">
                     <input type="text" class="form" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада">
-                    <input type="text" class="form" id="interestRate" name="interestRate" placeHolder="Процентная ставка, % годовых 10,00">                  
-                    <input type="checkbox" class="monthlyReplenishment" id="monthlyReplenishment" name="monthlyReplenishment">
-                    <p class="text4">Ежемесячное пополнение вклада</p>
-                    
+                    <input type="text" class="form" id="interestRate" name="interestRate" placeHolder="Процентная ставка, % годовых 10,00">                    
+                    <input type="text" class="form" id="replAmount" name="replAmount" placeHolder="Сумма пополнения вклада">     
+                    <input type="text" class="form" id="depositTerm" name="depositTerm" placeHolder="Срок вклада">
+                    <select class="form2" id="mounth" name="user_profile_color_1">
+                        <option value="1" >Месяц</option>
+                        <option value="2">Год</option>                      
+                    </select>
+                    <label class="text4">Ежемесячное пополнение вклада</label>
+                    <input type="checkbox" class="monthlyReplenishment" id="monthlyReplenishment" onchange="setForm()">   
                 </div>
             </div>
         </footer>
