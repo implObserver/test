@@ -1,14 +1,16 @@
 <?php
 
 header("Content-Type: application/json");
+
+const daysY = 365;
+const convert = 100;
+
 $data = json_decode(file_get_contents("php://input"), true);
 $date = date_parse_from_format("j.n.Y", $data['startDate']);
 $depAmount = $data['sum'];
 $percent = $data['percent'];
 $replAmount = $data['sumAdd'];
 $curMonth = $date["month"];
-const daysY = 365;
-const convert = 100;
 $daysInMonth = array(
     1 => 31,
     2 => 28,
@@ -25,15 +27,15 @@ $daysInMonth = array(
 );
 
 for ($i = 0; $i < $data["term"]; $i++) {
-    $depAmount += (($depAmount + $replAmount) * $daysInMonth[$curMonth] * ($percent / daysY)) / convert;
-    if($curMonth < 12) {
+    $depAmount += $replAmount + ($depAmount * $daysInMonth[$curMonth] * ($percent / daysY)) / convert;
+    if ($curMonth < 12) {
         $curMonth++;
     } else {
         $curMonth = 1;
     }
 }
 
-echo $depAmount;
+echo round($depAmount, 2);
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
