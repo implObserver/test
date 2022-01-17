@@ -2,18 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/javascript.js to edit this template
  */
-function setForm() {
-    var chbox;
-    var text;
-    text = document.getElementById('replAmount');
-    chbox = document.getElementById('monthlyReplenishment');
-    if (chbox.checked) {
-        text.style.display = "block";
-    } else {
-        text.style.display = "none";
-    }
-}
 
+var onlyNumber = /\D+|^\s*$/;
 var result = document.querySelector('#result');
 document.querySelector('.calculate').onclick = calculate;
 function calculate(e) {
@@ -65,17 +55,11 @@ function formValidate(select) {
     let label = document.querySelectorAll('.exc');
     let formReq = document.querySelectorAll('._req');
     let calendar = document.querySelector('#startDate');
-    for (let i = 0; i < label.length; i++) {
-        label[i].textContent = '';
-    }
-
-    formRemoveError(calendar);
+    clearMind(label);
 
     if ($.isEmptyObject(calendar.value)) {
         formAddError(calendar);
-        error++;
-        label = document.querySelector('#' + calendar.id + 'Exc');
-        label.textContent = excGetter(calendar.id);
+        error += setErr(calendar);
     } else {
         formRemoveError(calendar);
     }
@@ -83,20 +67,16 @@ function formValidate(select) {
     for (let i = 0; i < formReq.length; i++) {
         const input = formReq[i];
         formRemoveError(input);
-        if (/\D+|^\s*$/.test(input.value)) {
+        if (onlyNumber.test(input.value)) {
             if (input.id !== 'replAmount') {
                 formAddError(input);
-                error++;
-                label = document.querySelector('#' + input.id + 'Exc');
-                label.textContent = excGetter('other');
+                error += setErr(input);
             } else {
                 input.value = 0;
             }
         } else if (!rules(input, select)) {
             formAddError(input);
-            error++;
-            label = document.querySelector('#' + input.id + 'Exc');
-            label.textContent = excGetter(input.id);
+            error += setErr(input);
         }
     }
     return error;
@@ -148,10 +128,34 @@ function excGetter(name) {
     let excList = {
         'percent': "Не менее 3% и не более 100%",
         'replAmount': "Не более 3000000",
-        'depositTerm': "Не более 5 лет",
+        'depositTerm': " Не менее 1 месяца и не более 5 лет",
         'depositAmount': "Не менее 1000 и не более 3000000",
         'startDate': "Выберите дату",
         'other': "Введите целое положительное число"
     };
     return excList[name];
+}
+
+function setErr(input) {
+    let label = document.querySelector('#' + input.id + 'Exc');
+    label.textContent = excGetter(input.id);
+    return 1;
+}
+
+function setForm() {
+    var chbox;
+    var text;
+    text = document.getElementById('replAmount');
+    chbox = document.getElementById('monthlyReplenishment');
+    if (chbox.checked) {
+        text.style.display = "block";
+    } else {
+        text.style.display = "none";
+    }
+}
+
+function clearMind(input) {
+    for (let i = 0; i < input.length; i++) {
+        input[i].textContent = '';
+    }
 }
