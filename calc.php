@@ -4,7 +4,6 @@ header("Content-Type: application/json");
 
 const daysY = 365;
 const convert = 100;
-
 $data = json_decode(file_get_contents("php://input"), true);
 $date = date_parse_from_format("j.n.Y", $data['startDate']);
 $depAmount = $data['sum'];
@@ -35,10 +34,5 @@ for ($i = 0; $i < $data["term"]; $i++) {
     }
 }
 
-echo round($depAmount, 2);
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+$result = array('sum' => round($depAmount, 2));
+echo json_encode($result);

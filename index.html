@@ -13,6 +13,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="assets/datepicker/css/datepicker.min.css">       
     </head>
+
     <body>    
         <footer id="about" class="about">
             <div class="container">
@@ -35,12 +36,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </select>
                     </form>                 
                     <label class="text4">Ежемесячное пополнение вклада</label>
-
-                    <div id="result"></div>
+                    <label id="result"></div>
+                    <label class="exc _percent" id="percentExc"></label>
+                    <label class="exc _date" id="startDateExc"></label>
+                    <label class="exc _term" id="depositTermExc"></label>
+                    <label class="exc _dep" id="depositAmountExc"></label>
+                    <label class="exc _repl" id="replAmountExc"></label>
+                    <label class="capRes" id="capRes"></label>
                 </div>
             </div>
         </footer>    
-        
+
         <header>
             <div class="container">
                 <div class="rectangle1"></div>
@@ -50,17 +56,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <p class="text1">Deposit Calculator</p>
             </div>
         </header>
-        
+
         <!-- JavaScript -->
         <script src="assets/jquery/jquery.min.js"></script>
         <script src="assets/jqueryValidate/jquery.validate.min."></script>
         <script src="assets/datepicker/js/datepicker.min.js"></script>
         <script>
-                        $(function () {
-                            $('#startDate').datepicker({
-                                clearButton: true
+                            $(function () {
+                                $('#startDate').datepicker({
+                                    clearButton: true
+                                });
                             });
-                        });
         </script>
         <script src="script.js"></script>
     </body>
