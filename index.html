@@ -15,34 +15,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
 
     <body>    
-        <footer id="about" class="about">
-            <div class="container">
-                <div class="rectangle2">                  
-                    <p class="text2">Депозитный калькулятор</p>
-                    <p class="text3">Калькулятор депозитов позволяет рассчитать 
+        <footer class="about " id="about">
+            <div class="container ">
+                <div class="rectangle2 ">                  
+                    <p class="text2 ">Депозитный калькулятор</p>
+                    <p class="text3 ">Калькулятор депозитов позволяет рассчитать 
                         ваши доходы после внесения суммы на счет в банке 
                         по опредленному тарифу.</p>
                     <form action="#" id='ourForm'>
-                        <input type="text" readonly="readonly" class="form datepicker-here" id="startDate" name="startDate" placeHolder="Дата открытия">
-                        <input type="text" class="form _req" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада">
-                        <input type="text" class="form _req" id="percent" name="percent" placeHolder="Процентная ставка, % годовых">                    
-                        <input type="text" class="form _req" id="replAmount" name="replAmount" placeHolder="Сумма пополнения вклада">     
-                        <input type="text" class="form _req" id="depositTerm" name="depositTerm" placeHolder="Срок вклада">
-                        <button class="calculate" onclick="sendJSON()">Рассчитать</button>    
-                        <input type="checkbox" class="monthlyReplenishment" id="monthlyReplenishment" onchange="setForm()">  
-                        <select class="form2" id="time" name="formatSelection">
+                        <input type="text" readonly="readonly" class="form datepicker-here _sel" id="startDate" name="startDate" placeHolder="Дата открытия">
+                        <input type="text" class="form _req _sel" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада">
+                        <input type="text" class="form _req _sel" id="percent" name="percent" placeHolder="Процентная ставка, % годовых">                    
+                        <input type="text" class="form _sel" id="replenishmentAmount" name="replAmount" placeHolder="Сумма пополнения вклада">     
+                        <input type="text" class="form _req _sel" id="depositTerm" name="depositTerm" placeHolder="Срок вклада">
+                        <button class="calculate _sel" id="calculate" onclick="sendJSON()">Рассчитать</button>    
+                        <input type="checkbox" class="monthlyReplenishment _sel" id="monthlyReplenishment" onchange="changeVisibilityCheckBox('#monthlyReplenishment','#replenishmentAmount')">  
+                        <select class="time _sel" id="time" name="formatSelection">
                             <option value="1" >Месяц</option>
                             <option value="2">Год</option>                      
                         </select>
                     </form>                 
                     <label class="text4">Ежемесячное пополнение вклада</label>
-                    <label id="result"></div>
-                    <label class="exc _percent" id="percentExc"></label>
-                    <label class="exc _date" id="startDateExc"></label>
-                    <label class="exc _term" id="depositTermExc"></label>
-                    <label class="exc _dep" id="depositAmountExc"></label>
-                    <label class="exc _repl" id="replAmountExc"></label>
-                    <label class="capRes" id="capRes"></label>
+                    <label class ="result _sel"id="result"></div>
+                    <label class="exc _percent _sel" id="percentExc"></label>
+                    <label class="exc _date _sel" id="startDateExc"></label>
+                    <label class="exc _term _sel" id="depositTermExc"></label>
+                    <label class="exc _dep _sel" id="depositAmountExc"></label>
+                    <label class="exc _repl _sel" id="replAmountExc"></label>
+                    <label class="capRes _sel _sel" id="capRes"></label>
                 </div>
             </div>
         </footer>    
@@ -65,7 +65,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             $(function () {
                                 $('#startDate').datepicker({
                                     clearButton: true,
-                                    dateFormat: 'dd/mm/yyyy',
+                                    dateFormat: 'dd/mm/yyyy'
                                 });
                             });
         </script>

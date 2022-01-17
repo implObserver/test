@@ -2,9 +2,18 @@
 
 header("Content-Type: application/json");
 
-const daysY = 365;
-const convert = 100;
-const countMounth = 12;
+const   DAYS_Y = 365,
+        CONVERT = 100,
+        MOUNTHS_IN_YEAR = 12,
+        MIN_DEPOSIT_AMOUNT = 1000,
+        MAX_DEPOSIT_AMOUNT = 3000000,
+        MIN_PERCENT = 3,
+        MAX_PERCENT = 100,
+        MAX_REPLENISHMENT_AMOUNT = 3000000,
+        MIN_MOUNTHS = 1,
+        MAX_MOUNTHS = 60,
+        MIN_YEARS = 1,
+        MAX_YEARS = 5;
 try {
     $data = json_decode(file_get_contents("php://input"), true);
     $date = date_parse_from_format("j.n.Y", $data['startDate']);
@@ -23,24 +32,23 @@ try {
         11 => 30,
         12 => 31
     );
-    
+
     $depAmount = $data['sum'];
     $percent = $data['percent'];
     $replAmount = $data['sumAdd'];
     $term = $data['term'];
-    
-    $isDepAmount = $depAmount >= 1000 && $depAmount <= 3000000;
-    $isPercent = $percent >= 3 && $percent <= 100;
-    $isTerm = $term <= 60;
-    $isReplAmount = $replAmount <= 3000000;
-    
+
+    $isDepAmount = $depAmount >= MIN_DEPOSIT_AMOUNT && $depAmount <= MAX_DEPOSIT_AMOUNT;
+    $isPercent = $percent >= MIN_PERCENT && $percent <= MAX_PERCENT;
+    $isTerm = $term <= MAX_MOUNTHS;
+    $isReplAmount = $replAmount <= MAX_REPLENISHMENT_AMOUNT;
     $date_pattern = '#(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d#';
     $isDate = preg_match($date_pattern, $data['startDate']);
-    
+
     if ($isDepAmount && $isPercent && $isTerm && $isReplAmount && $isDate) {
         for ($i = 0; $i < $term; $i++) {
-            $depAmount += $replAmount + ($depAmount * $daysInMonth[$curMonth] * ($percent / daysY)) / convert;
-            if ($curMonth < countMounth) {
+            $depAmount += $replAmount + ($depAmount * $daysInMonth[$curMonth] * ($percent / DAYS_Y)) / CONVERT;
+            if ($curMonth < MOUNTHS_IN_YEAR) {
                 $curMonth++;
             } else {
                 $curMonth = 1;
