@@ -47,13 +47,15 @@ function calculate(e) {
         xhr.setRequestHeader('Content-Type', 'Content-Type: application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                capRes.textContent = "Сумма к выплате"
-                sum = JSON.parse(xhr.responseText);
+                capRes.textContent = "Сумма к выплате";
+                console.log(xhr.responseText);
+                sum = JSON.parse(xhr.response);
                 result.textContent = rub + sum['sum'];
             }
         };
         xhr.send(data);
     } else {
+        capRes.textContent = '';
         result.textContent = '';
     }
 }
