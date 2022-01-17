@@ -28,13 +28,15 @@ try {
     $percent = $data['percent'];
     $replAmount = $data['sumAdd'];
     $term = $data['term'];
-
+    
     $isDepAmount = $depAmount >= 1000 && $depAmount <= 3000000;
     $isPercent = $percent >= 3 && $percent <= 100;
     $isTerm = $term <= 60;
     $isReplAmount = $replAmount <= 3000000;
+    
     $date_pattern = '#(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d#';
     $isDate = preg_match($date_pattern, $data['startDate']);
+    
     if ($isDepAmount && $isPercent && $isTerm && $isReplAmount && $isDate) {
         for ($i = 0; $i < $term; $i++) {
             $depAmount += $replAmount + ($depAmount * $daysInMonth[$curMonth] * ($percent / daysY)) / convert;
