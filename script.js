@@ -14,9 +14,7 @@ const   MOUNTHS_IN_YEAR = 12,
         MIN_YEARS = 1,
         MAX_YEARS = 5,
         RUB = '₽';
-
 var allSelectors = getSelectors(document.querySelectorAll('._sel'));
-var onlyNumber = /\D+|^\s*$/;
 var isError;
 
 allSelectors.get("calculate").onclick = calculate;
@@ -42,9 +40,16 @@ function getSelectors(inputs) {
 
 function formValidate() {
     clearFields('.exc');
+    allFormRemoveError();
     dateValidate();
     replenishmentAmountValidate();
-    requirementInputValidate();
+    requirementInputsValidate();
+}
+
+function allFormRemoveError() {
+    for (let amount of allSelectors.values()) {
+        formRemoveError(amount);
+    }
 }
 
 function clearFields(input) {
@@ -59,25 +64,29 @@ function dateValidate() {
         formAddError(allSelectors.get("startDate"));
         isError = true;
         setErrorText(allSelectors.get("startDate"));
-    } else {
-        formRemoveError(allSelectors.get("startDate"));
     }
 }
 
 function replenishmentAmountValidate() {
-    if (onlyNumber.test(allSelectors.get("replenishmentAmount").value)) {
+    let isRule = /\D+/.test(allSelectors.get("replenishmentAmount").value) 
+            || !rules(allSelectors.get("replenishmentAmount"));
+    
+    if ($.isEmptyObject(allSelectors.get("replenishmentAmount").value)) {
         allSelectors.get("replenishmentAmount").value = 0;
+    } else if (isRule) {
+        formAddError(allSelectors.get("replenishmentAmount"));
+        isError = true;
+        setErrorText(allSelectors.get("replenishmentAmount"));
     }
 }
 
-function requirementInputValidate() {
+function requirementInputsValidate() {
     let formReq = document.querySelectorAll('._req');
-   
+
     for (let i = 0; i < formReq.length; i++) {
-        const input = formReq[i];       
-        formRemoveError(input);
-        
-        if (onlyNumber.test(input.value)) {
+        const input = formReq[i];
+
+        if (/\D+|^\s*$/.test(input.value)) {
             formAddError(input);
             isError = true;
             setErrorText(input);
@@ -110,7 +119,7 @@ function exceptionGetter(name) {
         'depositTerm': " Не менее 1 месяца и не более 5 лет",
         'depositAmount': "Не менее 1000 и не более 3000000",
         'startDate': "Выберите дату",
-        'other': "Введите целое положительное число"
+        'replenishmentAmount': "Введите целое положительное число",
     };
     return excList[name];
 }
