@@ -17,58 +17,59 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <body>    
         <footer class="about " id="about">
             <div class="container ">
-                <div class="rectangle2 ">                  
+                <div class="rectangle2 " onmousemove="dateValidate()">                  
                     <p class="text2 ">Депозитный калькулятор</p>
                     <p class="text3 ">Калькулятор депозитов позволяет рассчитать 
                         ваши доходы после внесения суммы на счет в банке 
                         по опредленному тарифу.</p>
+
                     <form action="#" id='ourForm'>
-                        <input type="text" readonly="readonly" class="form datepicker-here _sel" id="startDate" name="startDate" placeHolder="Дата открытия">
-                        <input type="text" class="form _req _sel" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада">
-                        <input type="text" class="form _req _sel" id="percent" name="percent" placeHolder="Процентная ставка, % годовых">                    
+                        <input type="text" readonly="readonly" class="form datepicker-here _req _sel" id="startDate" name="startDate" placeHolder="Дата открытия" onclick="dateValidate()">
+                        <input type="text" class="form _req _sel" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада" onmousemove="depositAmountValidate()">
+                        <input type="text" class="form _req _sel" id="percent" name="percent" placeHolder="Процентная ставка, % годовых" onmousemove="percentValidate()">                    
                         <input type="text" class="form _sel" id="replenishmentAmount" name="replAmount" placeHolder="Сумма пополнения вклада">     
-                        <input type="text" class="form _req _sel" id="depositTerm" name="depositTerm" placeHolder="Срок вклада">
+                        <input type="text" class="form _req _sel" id="depositTerm" name="depositTerm" placeHolder="Срок вклада" onmousemove="depositTermValidate()">
                         <button class="calculate _sel" id="calculate" onclick="sendJSON()">Рассчитать</button>    
-                        <input type="checkbox" class="monthlyReplenishment _sel" id="monthlyReplenishment" onchange="changeVisibilityCheckBox('#monthlyReplenishment','#replenishmentAmount')">  
+                        <input type="checkbox" class="monthlyReplenishment _sel" id="monthlyReplenishment" onchange="changeVisibilityCheckBox('#monthlyReplenishment', '#replenishmentAmount')">  
                         <select class="time _sel" id="time" name="formatSelection">
                             <option value="1" >Месяц</option>
                             <option value="2">Год</option>                      
                         </select>
                     </form>                 
                     <label class="text4">Ежемесячное пополнение вклада</label>
-                    <label class ="result _sel"id="result"></div>
-                    <label class="exc _percent _sel" id="percentExc"></label>
-                    <label class="exc _date _sel" id="startDateExc"></label>
-                    <label class="exc _term _sel" id="depositTermExc"></label>
-                    <label class="exc _dep _sel" id="depositAmountExc"></label>
-                    <label class="exc _repl _sel" id="replenishmentAmountExc"></label>
-                    <label class="capRes _sel _sel" id="capRes"></label>
-                </div>
+                    <label class ="result _sel _clean"id="result"></div>
+                <label class="exc _percent _sel _clean" id="percentExc"></label>
+                <label class="exc _date _sel _clean" id="startDateExc"></label>
+                <label class="exc _term _sel _clean" id="depositTermExc"></label>
+                <label class="exc _dep _sel _clean" id="depositAmountExc"></label>
+                <label class="exc _repl _sel _clean" id="replenishmentAmountExc"></label>
+                <label class="capRes _sel _clean" id="capRes"></label>
             </div>
-        </footer>    
+        </div>
+    </footer>    
 
-        <header>
-            <div class="container">
-                <div class="rectangle1"></div>
-                <div class="logo">
-                    <img src="img/logo-light 1.svg">
-                </div>
-                <p class="text1">Deposit Calculator</p>
+    <header>
+        <div class="container">
+            <div class="rectangle1"></div>
+            <div class="logo">
+                <img src="img/logo-light 1.svg">
             </div>
-        </header>
+            <p class="text1">Deposit Calculator</p>
+        </div>
+    </header>
 
-        <!-- JavaScript -->
-        <script src="assets/jquery/jquery.min.js"></script>
-        <script src="assets/jqueryValidate/jquery.validate.min."></script>
-        <script src="assets/datepicker/js/datepicker.min.js"></script>
-        <script>
+    <!-- JavaScript -->
+    <script src="assets/jquery/jquery.min.js"></script>
+    <script src="assets/jqueryValidate/jquery.validate.min."></script>
+    <script src="assets/datepicker/js/datepicker.min.js"></script>
+    <script>
                             $(function () {
                                 $('#startDate').datepicker({
                                     clearButton: true,
                                     dateFormat: 'dd/mm/yyyy'
                                 });
                             });
-        </script>
-        <script src="script.js"></script>
-    </body>
+    </script>
+    <script src="script.js"></script>
+</body>
 </html>

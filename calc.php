@@ -2,7 +2,7 @@
 
 header("Content-Type: application/json");
 
-const   DAYS_Y = 365,
+const DAYS_Y = 365,
         CONVERT = 100,
         MOUNTHS_IN_YEAR = 12,
         MIN_DEPOSIT_AMOUNT = 1000,
@@ -14,6 +14,7 @@ const   DAYS_Y = 365,
         MAX_MOUNTHS = 60,
         MIN_YEARS = 1,
         MAX_YEARS = 5;
+
 try {
     $data = json_decode(file_get_contents("php://input"), true);
     $date = date_parse_from_format("j.n.Y", $data['startDate']);
@@ -46,7 +47,9 @@ try {
     $isDate = preg_match($date_pattern, $data['startDate']);
 
     if ($isDepAmount && $isPercent && $isTerm && $isReplAmount && $isDate) {
-        for ($i = 0; $i < $term; $i++) {
+        for ($i = 0;
+                $i < $term;
+                $i++) {
             $depAmount += $replAmount + ($depAmount * $daysInMonth[$curMonth] * ($percent / DAYS_Y)) / CONVERT;
             if ($curMonth < MOUNTHS_IN_YEAR) {
                 $curMonth++;
