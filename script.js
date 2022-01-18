@@ -16,7 +16,6 @@ const   MOUNTHS_IN_YEAR = 12,
         RUB = '₽',
         RESULT_TEXT = "Сумма к выплате";
 var allSelectors = getSelectors(document.querySelectorAll('._sel'));
-var isError;
 
 var valideMap = new Map([
     ['percent', false],
@@ -245,7 +244,7 @@ function getJSON() {
 function yearToMounth() {
     result = allSelectors.get("depositTerm").value;
     if (allSelectors.get("time").value === '2') {
-        result *= 12;
+        result *= MOUNTHS_IN_YEAR;
     }
     return result;
 }
