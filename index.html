@@ -17,18 +17,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <body>    
         <footer class="about " id="about">
             <div class="container ">
-                <div class="rectangle2 " onmousemove="dateValidate()">                  
+                <div class="rectangle2 ">                  
                     <p class="text2 ">Депозитный калькулятор</p>
                     <p class="text3 ">Калькулятор депозитов позволяет рассчитать 
                         ваши доходы после внесения суммы на счет в банке 
                         по опредленному тарифу.</p>
 
                     <form action="#" id='ourForm'>
-                        <input type="text" readonly="readonly" class="form datepicker-here _req _sel" id="startDate" name="startDate" placeHolder="Дата открытия" onclick="dateValidate()">
-                        <input type="text" class="form _req _sel" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада" onmousemove="depositAmountValidate()">
-                        <input type="text" class="form _req _sel" id="percent" name="percent" placeHolder="Процентная ставка, % годовых" onmousemove="percentValidate()">                    
+                        <input type="text" readonly="readonly" class="form datepicker-here _sel" id="startDate" name="startDate" placeHolder="Дата открытия"">
+                        <input type="text" class="form _req _sel" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада" onmousemove="">
+                        <input type="text" class="form _req _sel" id="percent" name="percent" placeHolder="Процентная ставка, % годовых" onmousemove="">                    
                         <input type="text" class="form _sel" id="replenishmentAmount" name="replAmount" placeHolder="Сумма пополнения вклада">     
-                        <input type="text" class="form _req _sel" id="depositTerm" name="depositTerm" placeHolder="Срок вклада" onmousemove="depositTermValidate()">
+                        <input type="text" class="form _req _sel" id="depositTerm" name="depositTerm" placeHolder="Срок вклада" onmousemove="">
                         <button class="calculate _sel" id="calculate" onclick="sendJSON()">Рассчитать</button>    
                         <input type="checkbox" class="monthlyReplenishment _sel" id="monthlyReplenishment" onchange="changeVisibilityCheckBox('#monthlyReplenishment', '#replenishmentAmount')">  
                         <select class="time _sel" id="time" name="formatSelection">

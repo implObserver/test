@@ -179,6 +179,7 @@ function calculate(e) {
     e.preventDefault();
     isTextEmpty();
     zero();
+
     if (!isInvalide()) {
         sendRequest();
     }
