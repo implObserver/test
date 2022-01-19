@@ -24,6 +24,7 @@ var valideMap = new Map([
     ['depositAmount', false],
     ['startDate', false]
 ]);
+
 var inputs = getGroup('._req');
 inputs.forEach(input => input.addEventListener('input', () => inputValidate(input.id)));
 
