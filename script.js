@@ -15,6 +15,7 @@ const   MOUNTHS_IN_YEAR = 12,
         MAX_YEARS = 5,
         RUB = '₽',
         RESULT_TEXT = "Сумма к выплате";
+
 var allSelectors = getSelectors(document.querySelectorAll('._sel'));
 
 var valideMap = new Map([
