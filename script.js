@@ -37,6 +37,10 @@ function getSelectors(inputs) {
     return selectors;
 }
 
+function getGroup(key) {
+    return document.querySelectorAll(key);
+}
+
 function inputValidate(id) {
     let input = allSelectors.get(id);
     let isRule = compoundRule(input, "isMinMax_" + id);
@@ -129,15 +133,6 @@ function isTextEmpty() {
     inputs.forEach(input => rules(input, "isEmpty") ? inValide(input) : valide(input));
 }
 
-function getGroup(key) {
-    return document.querySelectorAll(key);
-}
-
-function zero() {
-    let replenishmentAmount = allSelectors.get("replenishmentAmount");
-    return replenishmentAmount.value === '' ? 0 : replenishmentAmount.value;
-}
-
 function isInvalide() {
     let isRule = Array.from(valideMap.values()).includes(true);
     return isRule;
@@ -166,7 +161,7 @@ function getJSON() {
         "sum": allSelectors.get("depositAmount").value, // сумма вклада
         "term": yearToMounth(), // срок вклада в месяцах
         "percent": allSelectors.get("percent").value, // процентная ставка, % годовых
-        "sumAdd": zero() // сумма ежемесячного пополнения вклада
+        "sumAdd": getReplenishmentAmount() // сумма ежемесячного пополнения вклада
     });
     return data;
 }
@@ -175,6 +170,11 @@ function yearToMounth() {
     let result = allSelectors.get("depositTerm").value;
     let checkBoxOption = allSelectors.get("time").value;
     return checkBoxOption === '1' ? result : result * MOUNTHS_IN_YEAR;
+}
+
+function getReplenishmentAmount() {
+    let replenishmentAmount = allSelectors.get("replenishmentAmount");
+    return replenishmentAmount.value === '' ? 0 : replenishmentAmount.value;
 }
 
 function changeVisibilityCheckBox(checkBox, input) {
