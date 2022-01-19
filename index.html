@@ -24,15 +24,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         по опредленному тарифу.</p>
 
                     <form action="#" id='ourForm'>
-                        <input type="text" readonly="readonly" class="form datepicker-here _sel" id="startDate" name="startDate" placeHolder="Дата открытия"">
+                        <input type="text" readonly="readonly" class="form datepicker-here _req _sel" id="startDate" name="startDate" placeHolder="Дата открытия" onfocus="inputValidate('startDate')">
                         <input type="text" class="form _req _sel" id="depositAmount" name="depositAmount" placeHolder="Сумма вклада" >
                         <input type="text" class="form _req _sel" id="percent" name="percent" placeHolder="Процентная ставка, % годовых">                    
-                        <input type="text" class="form _sel" id="replenishmentAmount" name="replAmount" placeHolder="Сумма пополнения вклада">     
+                        <input type="text" class="form _req _sel" id="replenishmentAmount" name="replAmount" placeHolder="Сумма пополнения вклада">     
                         <input type="text" class="form _req _sel" id="depositTerm" name="depositTerm" placeHolder="Срок вклада">
                         <button class="calculate _sel" id="calculate" onclick="sendJSON()">Рассчитать</button>    
                         <input type="checkbox" class="monthlyReplenishment _sel" id="monthlyReplenishment" onchange="changeVisibilityCheckBox('#monthlyReplenishment', '#replenishmentAmount')">  
-                        <select class="time _sel" id="time" name="formatSelection">
-                            <option value="1" >Месяц</option>
+                        <select class="time _sel" id="time" name="formatSelection" onclick="inputValidate('depositTerm')">
+                            <option value="1">Месяц</option>
                             <option value="2">Год</option>                      
                         </select>
                     </form>                 
@@ -66,7 +66,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             $(function () {
                                 $('#startDate').datepicker({
                                     clearButton: true,
-                                    dateFormat: 'dd/mm/yyyy'
+                                    dateFormat: 'dd.mm.yyyy'
                                 });
                             });
     </script>

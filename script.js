@@ -24,11 +24,9 @@ var valideMap = new Map([
     ['depositAmount', false],
     ['startDate', false]
 ]);
+var inputs = getGroup('._req');
+inputs.forEach(input => input.addEventListener('input', () => inputValidate(input.id)));
 
-allSelectors.get("replenishmentAmount").addEventListener('input', replenishmentAmountValidate);
-allSelectors.get("depositAmount").addEventListener('input', depositAmountValidate);
-allSelectors.get("percent").addEventListener('input', percentValidate);
-allSelectors.get("depositTerm").addEventListener('input', depositTermValidate);
 allSelectors.get("calculate").onclick = calculate;
 
 function getSelectors(inputs) {
@@ -39,93 +37,38 @@ function getSelectors(inputs) {
     return selectors;
 }
 
-function replenishmentAmountValidate() {
-    let replenishmentAmount = allSelectors.get("replenishmentAmount");
-    let isRule = rules(replenishmentAmount, "isOnlyNumber")
-            || !rules(replenishmentAmount, "isMaxReplenishmentAmount");
-
-    if (isRule) {
-        inValide(replenishmentAmount);
-    } else {
-        valide(replenishmentAmount);
-        replenishmentAmount.disable = true;
-    }
+function inputValidate(id) {
+    let input = allSelectors.get(id);
+    let isRule = compoundRule(input, "isMinMax_" + id);
+    isRule ? inValide(input) : valide(input);
 }
 
-function depositAmountValidate() {
-    let depositAmount = allSelectors.get("depositAmount");
-    if (rules(depositAmount, "isEmpty") || !rules(depositAmount, "isMinMaxDepositAmount")) {
-        inValide(depositAmount);
-    } else {
-        valide(depositAmount);
-    }
-}
-
-function percentValidate() {
-    let percent = allSelectors.get("percent");
-    if (rules(percent, "isEmpty") || !rules(percent, "isMinMaxPercent")) {
-        inValide(percent);
-    } else {
-        valide(percent);
-    }
-}
-
-function depositTermValidate() {
-    let depositTerm = allSelectors.get("depositTerm");
-    if (rules(depositTerm, "isEmpty") || !rules(depositTerm, "isMinMaxDepositTerm")) {
-        inValide(depositTerm);
-    } else {
-        valide(depositTerm);
-    }
-}
-
-function dateValidate() {
-    let startDate = allSelectors.get("startDate");
-    if (rules(startDate, "isEmpty")) {
-        inValide(startDate);
-    } else {
-        valide(startDate);
-    }
+function compoundRule(input, arg) {
+    return rules(input, "onlyNumber") || !rules(input, arg);
 }
 
 function rules(input, arg) {
     switch (arg) {
-        case 'isMinMaxDepositAmount':
-            if (input.value >= MIN_DEPOSIT_AMOUNT && input.value <= MAX_DEPOSIT_AMOUNT) {
-                return true;
-            }
-            break;
-        case 'isMinMaxPercent':
-            if (input.value >= MIN_PERCENT && input.value <= MAX_PERCENT) {
-                return true;
-            }
-            break;
-        case 'isMaxReplenishmentAmount':
-            if (input.value <= MAX_REPLENISHMENT_AMOUNT) {
-                return true;
-            }
-            break;
-        case 'isEmpty':
-            if (input.value === '') {
-                return true;
-            }
-            break;
-        case 'isMinMaxDepositTerm':
+        case 'isMinMax_startDate':
+            return true;
+        case 'isMinMax_depositAmount':
+            return input.value >= MIN_DEPOSIT_AMOUNT && input.value <= MAX_DEPOSIT_AMOUNT ? true : false;
+        case 'isMinMax_percent':
+            return input.value >= MIN_PERCENT && input.value <= MAX_PERCENT ? true : false;
+        case 'isMinMax_replenishmentAmount':
+            return input.value <= MAX_REPLENISHMENT_AMOUNT ? true : false;
+        case 'isMinMax_depositTerm':
             if (allSelectors.get("time").value === '1') {
-                if (input.value >= MIN_MOUNTHS && input.value <= MAX_MOUNTHS) {
-                    return true;
-                }
+                return input.value >= MIN_MOUNTHS && input.value <= MAX_MOUNTHS ? true : false;
             } else {
-                if (input.value >= MIN_YEARS && input.value <= MAX_YEARS) {
-                    return true;
-                }
+                return input.value >= MIN_YEARS && input.value <= MAX_YEARS ? true : false;
             }
-            break;
+        case 'isEmpty':
+            let isRule1 = Object.is(input, allSelectors.get("replenishmentAmount"));
+            return isRule1 ? false : input.value === '';
         case 'onlyNumber':
-            if (!/\D+|\.+/.test(input.value)) {
-                return true;
-            }
-            break;
+            let isRule2 = Object.is(input, allSelectors.get("startDate"));
+            return isRule2 ? false : /\D+|\.+/.test(input.value);
     }
 }
 
@@ -176,21 +119,14 @@ function exceptionGetter(name) {
 
 function calculate(e) {
     e.preventDefault();
-    isTextEmpty();
-    zero();
-
+    isTextEmpty()
     if (!isInvalide()) {
         sendRequest();
     }
 }
 
 function isTextEmpty() {
-    let inputs = getGroup('._req');
-    for (let i = 0; i < inputs.length; i++) {
-        if (rules(inputs[i], "isEmpty")) {
-            inValide(inputs[i]);
-        }
-    }
+    inputs.forEach(input => rules(input, "isEmpty") ? inValide(input) : valide(input));
 }
 
 function getGroup(key) {
@@ -199,18 +135,12 @@ function getGroup(key) {
 
 function zero() {
     let replenishmentAmount = allSelectors.get("replenishmentAmount");
-    if (replenishmentAmount.value === '') {
-        replenishmentAmount.value = 0;
-    }
+    return replenishmentAmount.value === '' ? 0 : replenishmentAmount.value;
 }
 
 function isInvalide() {
-    for (let amount of valideMap.values()) {
-        if (amount === true) {
-            return true;
-        }
-    }
-    return false;
+    let isRule = Array.from(valideMap.values()).includes(true);
+    return isRule;
 }
 
 function sendRequest() {
@@ -236,17 +166,15 @@ function getJSON() {
         "sum": allSelectors.get("depositAmount").value, // сумма вклада
         "term": yearToMounth(), // срок вклада в месяцах
         "percent": allSelectors.get("percent").value, // процентная ставка, % годовых
-        "sumAdd": allSelectors.get("replenishmentAmount").value // сумма ежемесячного пополнения вклада
+        "sumAdd": zero() // сумма ежемесячного пополнения вклада
     });
     return data;
 }
 
 function yearToMounth() {
-    result = allSelectors.get("depositTerm").value;
-    if (allSelectors.get("time").value === '2') {
-        result *= MOUNTHS_IN_YEAR;
-    }
-    return result;
+    let result = allSelectors.get("depositTerm").value;
+    let checkBoxOption = allSelectors.get("time").value;
+    return checkBoxOption === '1' ? result : result * MOUNTHS_IN_YEAR;
 }
 
 function changeVisibilityCheckBox(checkBox, input) {
