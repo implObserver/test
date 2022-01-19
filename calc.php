@@ -15,24 +15,25 @@ const DAYS_Y = 365,
         MIN_YEARS = 1,
         MAX_YEARS = 5;
 
+$daysInMonth = array(
+    1 => 31,
+    2 => 28,
+    3 => 31,
+    4 => 30,
+    5 => 31,
+    6 => 30,
+    7 => 31,
+    8 => 31,
+    9 => 30,
+    10 => 31,
+    11 => 30,
+    12 => 31
+);
+
 try {
     $data = json_decode(file_get_contents("php://input"), true);
     $date = date_parse_from_format("j.n.Y", $data['startDate']);
     $curMonth = $date["month"];
-    $daysInMonth = array(
-        1 => 31,
-        2 => 28,
-        3 => 31,
-        4 => 30,
-        5 => 31,
-        6 => 30,
-        7 => 31,
-        8 => 31,
-        9 => 30,
-        10 => 31,
-        11 => 30,
-        12 => 31
-    );
 
     $depAmount = $data['sum'];
     $percent = $data['percent'];
